@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão 2049</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="container">
+
+        <!-- Tela inicial -->
+        <section id="tela-inicial" class="tela ativa">
+            <div class="conteudo">
+                <span class="tag">MISSÃO 2049</span>
+
+                <h1>Uma decisão pode mudar o futuro.</h1>
+
+                <p>
+                    Em 2049, a humanidade enfrenta grandes desafios.
+                    Suas escolhas podem determinar o que acontecerá
+                    com o planeta no futuro.
+                </p>
+
+                <p id="introducao">
+                    Prepare-se para responder algumas perguntas e descobrir
+                    quais decisões você tomaria.
+                </p>
+
+                <button id="botao-iniciar" class="botao">
+                    Iniciar missão
+                </button>
+            </div>
+        </section>
+
+        <!-- Tela do jogo -->
+        <section id="tela-jogo" class="tela">
+
+            <div class="topo">
+                <span class="tag">MISSÃO 2049</span>
+                <span id="contador">Pergunta 1 de 5</span>
+            </div>
+
+            <div class="card-jogo">
+
+                <p id="personagem" class="personagem"></p>
+
+                <h2 id="pergunta"></h2>
+
+                <div id="alternativas" class="alternativas">
+                    <!-- As alternativas serão criadas pelo JavaScript -->
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Tela final -->
+        <section id="tela-final" class="tela">
+
+            <div class="conteudo resultado">
+
+                <span class="tag">MISSÃO CONCLUÍDA</span>
+
+                <h1 id="titulo-resultado">
+                    Parabéns!
+                </h1>
+
+                <p id="resultado"></p>
+
+                <div class="pontuacao">
+                    <span>Sua pontuação</span>
+                    <strong id="pontuacao">0/5</strong>
+                </div>
+
+                <p id="afirmacao" class="afirmacao"></p>
+
+                <button id="botao-jogar-novamente" class="botao">
+                    Jogar novamente
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
