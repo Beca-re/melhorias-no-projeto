@@ -1,646 +1,813 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Missão 2049</title>
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #201335, #5429a8);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .tela {
+            display: none;
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .tela.ativa {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .conteudo {
+            width: 100%;
+            max-width: 750px;
+            text-align: center;
+        }
+
+        .tag {
+            display: inline-block;
+            background-color: #ff6b35;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: 50px;
+            margin-bottom: 25px;
+        }
+
+        h2 {
+            font-size: 32px;
+            line-height: 1.3;
+            margin-bottom: 30px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .botao {
+            border: none;
+            background-color: #ff6b35;
+            color: white;
+            padding: 17px 35px;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+
+        .botao:hover {
+            background-color: #e95422;
+            transform: scale(1.03);
+        }
+
+        #tela-jogo {
+            display: none;
+        }
+
+        #tela-jogo.ativa {
+            display: block;
+        }
+
+        .topo {
+            max-width: 900px;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topo .tag {
+            margin: 0;
+        }
+
+        #contador {
+            font-weight: bold;
+        }
+
+        .card {
+            max-width: 900px;
+            margin: auto;
+            background-color: white;
+            color: #29252f;
+            padding: 45px;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .personagem {
+            color: #ff6b35;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .alternativas {
+            display: grid;
+            gap: 15px;
+        }
+
+        .alternativa {
+            width: 100%;
+            padding: 20px;
+            background-color: white;
+            border: 2px solid #dddddd;
+            border-radius: 12px;
+            color: #29252f;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: left;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .alternativa:hover {
+            border-color: #ff6b35;
+            background-color: #fff4ef;
+        }
+
+        .alternativa.correta {
+            background-color: #dff5e8;
+            border-color: #2e9d69;
+            color: #21754e;
+        }
+
+        .alternativa.errada {
+            background-color: #ffe1e1;
+            border-color: #d94a4a;
+            color: #a52e2e;
+        }
+
+        .alternativa:disabled {
+            cursor: default;
+        }
+
+        .pontuacao {
+            background-color: white;
+            color: #29252f;
+            padding: 25px;
+            border-radius: 18px;
+            margin: 30px 0;
+        }
+
+        .pontuacao span {
+            display: block;
+            color: #68636e;
+            margin-bottom: 10px;
+        }
+
+        .pontuacao strong {
+            display: block;
+            font-size: 45px;
+            color: #5429a8;
+        }
+
+        .afirmacao {
+            background-color: #eee7ff;
+            color: #5429a8;
+            padding: 20px;
+            border-radius: 15px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+
+            h1 {
+                font-size: 38px;
+            }
+
+            h2 {
+                font-size: 25px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            .topo {
+                gap: 10px;
+            }
+
+            .topo .tag {
+                font-size: 10px;
+                padding: 8px 10px;
+            }
+
+            #contador {
+                font-size: 12px;
+            }
+
+            .botao {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <main class="container">
+    <!-- ========================= -->
+    <!-- TELA INICIAL -->
+    <!-- ========================= -->
 
-        <!-- Tela inicial -->
-        <section id="tela-inicial" class="tela ativa">
-            <div class="conteudo">
-                <span class="tag">MISSÃO 2049</span>
+    <section id="tela-inicial" class="tela ativa">
 
-                <h1>Uma decisão pode mudar o futuro.</h1>
+        <div class="conteudo">
 
-                <p>
-                    Em 2049, a humanidade enfrenta grandes desafios.
-                    Suas escolhas podem determinar o que acontecerá
-                    com o planeta no futuro.
-                </p>
+            <span class="tag">MISSÃO 2049</span>
 
-                <p id="introducao">
-                    Prepare-se para responder algumas perguntas e descobrir
-                    quais decisões você tomaria.
-                </p>
+            <h1>
+                Uma decisão pode mudar o futuro.
+            </h1>
 
-                <button id="botao-iniciar" class="botao">
-                    Iniciar missão
-                </button>
-            </div>
-        </section>
+            <p>
+                Em 2049, a humanidade enfrenta grandes desafios.
+                Suas escolhas podem determinar o que acontecerá
+                com o planeta no futuro.
+            </p>
 
-        <!-- Tela do jogo -->
-        <section id="tela-jogo" class="tela">
+            <p>
+                Prepare-se para responder algumas perguntas e
+                descobrir quais decisões você tomaria.
+            </p>
 
-            <div class="topo">
-                <span class="tag">MISSÃO 2049</span>
-                <span id="contador">Pergunta 1 de 5</span>
-            </div>
+            <button id="botao-iniciar" class="botao">
+                Iniciar
+            </button>
 
-            <div class="card-jogo">
+        </div>
 
-                <p id="personagem" class="personagem"></p>
+    </section>
 
-                <h2 id="pergunta"></h2>
 
-                <div id="alternativas" class="alternativas">
-                    <!-- As alternativas serão criadas pelo JavaScript -->
-                </div>
+    <!-- ========================= -->
+    <!-- TELA DO JOGO -->
+    <!-- ========================= -->
 
-            </div>
+    <section id="tela-jogo" class="tela">
 
-        </section>
+        <div class="topo">
 
-        <!-- Tela final -->
-        <section id="tela-final" class="tela">
+            <span class="tag">
+                MISSÃO 2049
+            </span>
 
-            <div class="conteudo resultado">
+            <span id="contador">
+                Pergunta 1 de 5
+            </span>
 
-                <span class="tag">MISSÃO CONCLUÍDA</span>
+        </div>
 
-                <h1 id="titulo-resultado">
-                    Parabéns!
-                </h1>
 
-                <p id="resultado"></p>
+        <div class="card">
 
-                <div class="pontuacao">
-                    <span>Sua pontuação</span>
-                    <strong id="pontuacao">0/5</strong>
-                </div>
+            <p id="personagem" class="personagem">
+                Em 2049...
+            </p>
 
-                <p id="afirmacao" class="afirmacao"></p>
+            <h2 id="pergunta">
+                Pergunta
+            </h2>
 
-                <button id="botao-jogar-novamente" class="botao">
-                    Jogar novamente
-                </button>
-
+            <div id="alternativas" class="alternativas">
             </div>
 
-        </section>
-
-    </main>
-
-    <script src="script.js"></script>
-
-</body>
-</html>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    --laranja: #ff6b35;
-    --laranja-escuro: #e95422;
-    --roxo: #5429a8;
-    --roxo-claro: #eee7ff;
-    --fundo: #f7f5f2;
-    --branco: #ffffff;
-    --texto: #29252f;
-    --texto-claro: #68636e;
-    --verde: #2e9d69;
-    --vermelho: #d94a4a;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--fundo);
-    color: var(--texto);
-    min-height: 100vh;
-}
-
-.container {
-    min-height: 100vh;
-    width: 100%;
-}
-
-.tela {
-    display: none;
-    min-height: 100vh;
-    padding: 40px 20px;
-}
-
-.tela.ativa {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.conteudo {
-    width: 100%;
-    max-width: 700px;
-    text-align: center;
-}
-
-.tag {
-    display: inline-block;
-    background: var(--roxo-claro);
-    color: var(--roxo);
-    padding: 8px 16px;
-    border-radius: 50px;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    margin-bottom: 25px;
-}
-
-h1 {
-    font-size: clamp(38px, 7vw, 68px);
-    line-height: 1.05;
-    margin-bottom: 25px;
-}
-
-h2 {
-    font-size: clamp(25px, 5vw, 40px);
-    line-height: 1.2;
-    margin-bottom: 30px;
-}
-
-p {
-    color: var(--texto-claro);
-    line-height: 1.7;
-    font-size: 17px;
-    margin-bottom: 18px;
-}
-
-.botao {
-    border: none;
-    background: var(--laranja);
-    color: white;
-    padding: 17px 32px;
-    border-radius: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.2s;
-    margin-top: 20px;
-}
-
-.botao:hover {
-    background: var(--laranja-escuro);
-    transform: translateY(-2px);
-}
-
-#tela-jogo {
-    align-items: flex-start;
-}
-
-#tela-jogo.ativa {
-    display: block;
-}
-
-.topo {
-    max-width: 900px;
-    margin: 0 auto 35px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.topo .tag {
-    margin: 0;
-}
-
-#contador {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--texto-claro);
-}
-
-.card-jogo {
-    max-width: 900px;
-    margin: auto;
-    background: var(--branco);
-    padding: 45px;
-    border-radius: 25px;
-    box-shadow: 0 10px 40px rgba(40, 30, 50, 0.08);
-}
-
-.personagem {
-    color: var(--laranja);
-    font-weight: 800;
-    font-size: 16px;
-    margin-bottom: 15px;
-}
-
-.alternativas {
-    display: grid;
-    gap: 15px;
-}
-
-.alternativa {
-    width: 100%;
-    padding: 20px;
-    background: white;
-    border: 2px solid #e4e0e7;
-    border-radius: 14px;
-    color: var(--texto);
-    font-family: inherit;
-    font-size: 16px;
-    font-weight: 600;
-    text-align: left;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.alternativa:hover {
-    border-color: var(--laranja);
-    background: #fff7f3;
-    transform: translateX(4px);
-}
-
-.alternativa.correta {
-    border-color: var(--verde);
-    background: #e9f8f0;
-    color: var(--verde);
-}
-
-.alternativa.errada {
-    border-color: var(--vermelho);
-    background: #fff0f0;
-    color: var(--vermelho);
-}
-
-.alternativa:disabled {
-    cursor: default;
-}
-
-.resultado {
-    max-width: 650px;
-}
-
-.pontuacao {
-    background: white;
-    padding: 25px;
-    border-radius: 18px;
-    margin: 30px 0;
-    box-shadow: 0 8px 30px rgba(40, 30, 50, 0.07);
-}
-
-.pontuacao span {
-    display: block;
-    color: var(--texto-claro);
-    margin-bottom: 8px;
-}
-
-.pontuacao strong {
-    display: block;
-    font-size: 42px;
-    color: var(--roxo);
-}
-
-.afirmacao {
-    background: var(--roxo-claro);
-    color: var(--roxo);
-    padding: 22px;
-    border-radius: 16px;
-    font-weight: 600;
-}
-
-@media (max-width: 600px) {
-
-    .tela {
-        padding: 25px 15px;
-    }
-
-    .card-jogo {
-        padding: 25px 20px;
-        border-radius: 18px;
-    }
-
-    .topo {
-        margin-bottom: 20px;
-    }
-
-    .topo .tag {
-        font-size: 10px;
-        padding: 7px 10px;
-    }
-
-    #contador {
-        font-size: 12px;
-    }
-
-    .botao {
-        width: 100%;
-    }
-
-    .alternativa {
-        padding: 17px;
-    }
-}
-// ==============================
-// DADOS DO JOGO
-// ==============================
-
-const nomes = [
-    "Gabriel",
-    "Ana",
-    "Lucas",
-    "Marina",
-    "Rafael",
-    "Beatriz",
-    "João",
-    "Camila"
-];
-
-const afirmacoes = [
-    "Cada pequena escolha pode contribuir para construir um futuro melhor.",
-    "O futuro é resultado das decisões que tomamos hoje.",
-    "Pensar no impacto das nossas escolhas também é pensar nas próximas gerações.",
-    "Não existe futuro sustentável sem participação e responsabilidade.",
-    "Grandes mudanças começam com pequenas decisões.",
-    "Uma escolha consciente pode inspirar muitas outras pessoas."
-];
-
-const perguntas = [
-    {
-        pergunta: "Em 2049, Gabriel precisa escolher uma fonte de energia para sua cidade. Qual opção seria mais sustentável?",
-        alternativas: [
-            "Energia solar e eólica",
-            "Carvão mineral",
-            "Petróleo",
-            "Queimar resíduos sem controle"
-        ],
-        correta: 0
-    },
-
-    {
-        pergunta: "Ana percebe que sua cidade está produzindo muito lixo. Qual atitude poderia ajudar?",
-        alternativas: [
-            "Aumentar o consumo de produtos descartáveis",
-            "Separar materiais recicláveis e reduzir o desperdício",
-            "Jogar todo o lixo no mesmo local",
-            "Queimar o lixo em áreas abertas"
-        ],
-        correta: 1
-    },
-
-    {
-        pergunta: "Lucas precisa se deslocar pela cidade. Qual escolha contribui para reduzir a emissão de poluentes?",
-        alternativas: [
-            "Usar o carro sozinho todos os dias",
-            "Deixar o carro ligado durante todo o trajeto",
-            "Usar transporte público, bicicleta ou caminhar",
-            "Comprar um veículo maior"
-        ],
-        correta: 2
-    },
-
-    {
-        pergunta: "Marina quer economizar água em casa. Qual atitude é mais adequada?",
-        alternativas: [
-            "Deixar a torneira aberta enquanto escova os dentes",
-            "Tomar banhos cada vez mais longos",
-            "Consertar vazamentos e evitar desperdícios",
-            "Lavar calçadas diariamente com mangueira"
-        ],
-        correta: 2
-    },
-
-    {
-        pergunta: "Rafael quer ajudar sua comunidade a construir um futuro melhor. O que ele pode fazer?",
-        alternativas: [
-            "Ignorar os problemas da comunidade",
-            "Participar de ações e incentivar outras pessoas",
-            "Consumir mais recursos sem preocupação",
-            "Evitar conversar sobre sustentabilidade"
-        ],
-        correta: 1
-    }
-];
-
-
-// ==============================
-// VARIÁVEIS DO JOGO
-// ==============================
-
-let perguntaAtual = 0;
-let pontos = 0;
-let nomeJogador = "";
-
-
-// ==============================
-// ELEMENTOS DO HTML
-// ==============================
-
-const telaInicial = document.getElementById("tela-inicial");
-const telaJogo = document.getElementById("tela-jogo");
-const telaFinal = document.getElementById("tela-final");
-
-const botaoIniciar = document.getElementById("botao-iniciar");
-const botaoJogarNovamente = document.getElementById("botao-jogar-novamente");
-
-const personagem = document.getElementById("personagem");
-const pergunta = document.getElementById("pergunta");
-const alternativas = document.getElementById("alternativas");
-
-const contador = document.getElementById("contador");
-
-const resultado = document.getElementById("resultado");
-const pontuacao = document.getElementById("pontuacao");
-const afirmacao = document.getElementById("afirmacao");
-
-
-// ==============================
-// FUNÇÕES
-// ==============================
-
-// Escolhe um nome aleatório
-function escolherNomeAleatorio() {
-
-    const indice = Math.floor(Math.random() * nomes.length);
-
-    return nomes[indice];
-}
-
-
-// Escolhe uma afirmação aleatória
-function escolherAfirmacaoAleatoria() {
-
-    const indice = Math.floor(Math.random() * afirmacoes.length);
-
-    return afirmacoes[indice];
-}
-
-
-// Troca uma parte do texto usando replace()
-function personalizarPergunta(texto) {
-
-    return texto.replace("Gabriel", nomeJogador);
-}
-
-
-// Mostra uma tela específica
-function mostrarTela(tela) {
-
-    telaInicial.classList.remove("ativa");
-    telaJogo.classList.remove("ativa");
-    telaFinal.classList.remove("ativa");
-
-    tela.classList.add("ativa");
-}
-
-
-// Carrega a pergunta atual
-function carregarPergunta() {
-
-    const perguntaAtualObjeto = perguntas[perguntaAtual];
-
-    personagem.textContent = `Em 2049, ${nomeJogador}...`;
-
-    // Utilizando replace() para trocar o nome original
-    pergunta.textContent = personalizarPergunta(
-        perguntaAtualObjeto.pergunta
-    );
-
-    contador.textContent =
-        `Pergunta ${perguntaAtual + 1} de ${perguntas.length}`;
-
-    alternativas.innerHTML = "";
-
-    perguntaAtualObjeto.alternativas.forEach(
-        (textoAlternativa, indice) => {
-
-            const botao = document.createElement("button");
-
-            botao.classList.add("alternativa");
-
-            botao.textContent = textoAlternativa;
-
-            botao.addEventListener("click", () => {
-
-                verificarResposta(indice, botao);
-
-            });
-
-            alternativas.appendChild(botao);
+        </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- TELA FINAL -->
+    <!-- ========================= -->
+
+    <section id="tela-final" class="tela">
+
+        <div class="conteudo">
+
+            <span class="tag">
+                MISSÃO CONCLUÍDA
+            </span>
+
+            <h1 id="titulo-resultado">
+                Parabéns!
+            </h1>
+
+            <p id="resultado">
+                Você terminou a missão.
+            </p>
+
+            <div class="pontuacao">
+
+                <span>
+                    Sua pontuação
+                </span>
+
+                <strong id="pontuacao">
+                    0/5
+                </strong>
+
+            </div>
+
+            <p id="afirmacao" class="afirmacao">
+                Cada escolha pode fazer a diferença.
+            </p>
+
+            <button id="botao-jogar-novamente" class="botao">
+                Jogar Novamente
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ========================= -->
+
+    <script>
+
+        // ==========================================
+        // NOMES ALEATÓRIOS
+        // ==========================================
+
+        const nomes = [
+            "Gabriel",
+            "Ana",
+            "Lucas",
+            "Marina",
+            "Rafael",
+            "Beatriz",
+            "João",
+            "Camila"
+        ];
+
+
+        // ==========================================
+        // AFIRMAÇÕES ALEATÓRIAS
+        // ==========================================
+
+        const afirmacoes = [
+            "Cada pequena escolha pode contribuir para construir um futuro melhor.",
+
+            "O futuro é resultado das decisões que tomamos hoje.",
+
+            "Pensar no impacto das nossas escolhas também é pensar nas próximas gerações.",
+
+            "Não existe futuro sustentável sem participação e responsabilidade.",
+
+            "Grandes mudanças começam com pequenas decisões.",
+
+            "Uma escolha consciente pode inspirar muitas outras pessoas."
+        ];
+
+
+        // ==========================================
+        // PERGUNTAS
+        // ==========================================
+
+        const perguntas = [
+
+            {
+                pergunta:
+                    "Em 2049, Gabriel precisa escolher uma fonte de energia para sua cidade. Qual opção seria mais sustentável?",
+
+                alternativas: [
+                    "Energia solar e eólica",
+                    "Carvão mineral",
+                    "Petróleo",
+                    "Queimar resíduos sem controle"
+                ],
+
+                correta: 0
+            },
+
+            {
+                pergunta:
+                    "Ana percebe que sua cidade está produzindo muito lixo. Qual atitude poderia ajudar?",
+
+                alternativas: [
+                    "Aumentar o consumo de produtos descartáveis",
+                    "Separar materiais recicláveis e reduzir o desperdício",
+                    "Jogar todo o lixo no mesmo local",
+                    "Queimar o lixo em áreas abertas"
+                ],
+
+                correta: 1
+            },
+
+            {
+                pergunta:
+                    "Lucas precisa se deslocar pela cidade. Qual escolha contribui para reduzir a emissão de poluentes?",
+
+                alternativas: [
+                    "Usar o carro sozinho todos os dias",
+                    "Deixar o carro ligado durante todo o trajeto",
+                    "Usar transporte público, bicicleta ou caminhar",
+                    "Comprar um veículo maior"
+                ],
+
+                correta: 2
+            },
+
+            {
+                pergunta:
+                    "Marina quer economizar água em casa. Qual atitude é mais adequada?",
+
+                alternativas: [
+                    "Deixar a torneira aberta enquanto escova os dentes",
+                    "Tomar banhos cada vez mais longos",
+                    "Consertar vazamentos e evitar desperdícios",
+                    "Lavar calçadas diariamente com mangueira"
+                ],
+
+                correta: 2
+            },
+
+            {
+                pergunta:
+                    "Rafael quer ajudar sua comunidade a construir um futuro melhor. O que ele pode fazer?",
+
+                alternativas: [
+                    "Ignorar os problemas da comunidade",
+                    "Participar de ações e incentivar outras pessoas",
+                    "Consumir mais recursos sem preocupação",
+                    "Evitar conversar sobre sustentabilidade"
+                ],
+
+                correta: 1
+            }
+
+        ];
+
+
+        // ==========================================
+        // VARIÁVEIS DO JOGO
+        // ==========================================
+
+        let perguntaAtual = 0;
+
+        let pontos = 0;
+
+        let nomeJogador = "";
+
+
+        // ==========================================
+        // ELEMENTOS DA PÁGINA
+        // ==========================================
+
+        const telaInicial =
+            document.getElementById("tela-inicial");
+
+        const telaJogo =
+            document.getElementById("tela-jogo");
+
+        const telaFinal =
+            document.getElementById("tela-final");
+
+        const botaoIniciar =
+            document.getElementById("botao-iniciar");
+
+        const botaoJogarNovamente =
+            document.getElementById("botao-jogar-novamente");
+
+        const personagem =
+            document.getElementById("personagem");
+
+        const pergunta =
+            document.getElementById("pergunta");
+
+        const alternativas =
+            document.getElementById("alternativas");
+
+        const contador =
+            document.getElementById("contador");
+
+        const resultado =
+            document.getElementById("resultado");
+
+        const pontuacao =
+            document.getElementById("pontuacao");
+
+        const afirmacao =
+            document.getElementById("afirmacao");
+
+        const tituloResultado =
+            document.getElementById("titulo-resultado");
+
+
+        // ==========================================
+        // ESCOLHER NOME ALEATÓRIO
+        // ==========================================
+
+        function escolherNomeAleatorio() {
+
+            const indice =
+                Math.floor(Math.random() * nomes.length);
+
+            return nomes[indice];
+
         }
-    );
-}
 
 
-// Verifica se a resposta está correta
-function verificarResposta(indiceEscolhido, botaoEscolhido) {
+        // ==========================================
+        // ESCOLHER AFIRMAÇÃO ALEATÓRIA
+        // ==========================================
 
-    const perguntaAtualObjeto = perguntas[perguntaAtual];
+        function escolherAfirmacaoAleatoria() {
 
-    const botoes = document.querySelectorAll(".alternativa");
+            const indice =
+                Math.floor(Math.random() * afirmacoes.length);
 
-    botoes.forEach(botao => {
-        botao.disabled = true;
-    });
+            return afirmacoes[indice];
 
-    if (indiceEscolhido === perguntaAtualObjeto.correta) {
+        }
 
-        botaoEscolhido.classList.add("correta");
 
-        pontos++;
+        // ==========================================
+        // MOSTRAR UMA TELA
+        // ==========================================
 
-    } else {
+        function mostrarTela(tela) {
 
-        botaoEscolhido.classList.add("errada");
+            telaInicial.classList.remove("ativa");
 
-        botoes[perguntaAtualObjeto.correta]
-            .classList.add("correta");
-    }
+            telaJogo.classList.remove("ativa");
 
-    setTimeout(() => {
+            telaFinal.classList.remove("ativa");
 
-        perguntaAtual++;
+            tela.classList.add("ativa");
 
-        if (perguntaAtual < perguntas.length) {
+        }
+
+
+        // ==========================================
+        // INICIAR JOGO
+        // ==========================================
+
+        function iniciarJogo() {
+
+            perguntaAtual = 0;
+
+            pontos = 0;
+
+            // Math.random() + Math.floor()
+            nomeJogador =
+                escolherNomeAleatorio();
+
+            mostrarTela(telaJogo);
 
             carregarPergunta();
 
-        } else {
+        }
 
-            finalizarJogo();
+
+        // ==========================================
+        // CARREGAR PERGUNTA
+        // ==========================================
+
+        function carregarPergunta() {
+
+            const perguntaAtualObjeto =
+                perguntas[perguntaAtual];
+
+
+            personagem.textContent =
+                `Em 2049, ${nomeJogador}...`;
+
+
+            // ======================================
+            // replace()
+            // ======================================
+            // Substitui "Gabriel" pelo nome sorteado.
+
+            const perguntaPersonalizada =
+                perguntaAtualObjeto.pergunta.replace(
+                    "Gabriel",
+                    nomeJogador
+                );
+
+
+            pergunta.textContent =
+                perguntaPersonalizada;
+
+
+            contador.textContent =
+                `Pergunta ${perguntaAtual + 1} de ${perguntas.length}`;
+
+
+            alternativas.innerHTML = "";
+
+
+            // Criar os botões das alternativas
+
+            perguntaAtualObjeto.alternativas.forEach(
+                (textoAlternativa, indice) => {
+
+                    const botao =
+                        document.createElement("button");
+
+                    botao.classList.add("alternativa");
+
+                    botao.textContent =
+                        textoAlternativa;
+
+
+                    botao.addEventListener(
+                        "click",
+                        function () {
+
+                            verificarResposta(
+                                indice,
+                                botao
+                            );
+
+                        }
+                    );
+
+
+                    alternativas.appendChild(botao);
+
+                }
+            );
 
         }
 
-    }, 1000);
-}
+
+        // ==========================================
+        // VERIFICAR RESPOSTA
+        // ==========================================
+
+        function verificarResposta(
+            indiceEscolhido,
+            botaoEscolhido
+        ) {
+
+            const perguntaAtualObjeto =
+                perguntas[perguntaAtual];
 
 
-// Finaliza o jogo
-function finalizarJogo() {
-
-    mostrarTela(telaFinal);
-
-    pontuacao.textContent =
-        `${pontos}/${perguntas.length}`;
-
-    afirmacao.textContent =
-        escolherAfirmacaoAleatoria();
-
-    if (pontos === perguntas.length) {
-
-        document.getElementById("titulo-resultado").textContent =
-            "Missão perfeita!";
-
-        resultado.textContent =
-            `${nomeJogador} acertou todas as perguntas e mostrou que está preparado para ajudar a construir um futuro melhor.`;
-
-    } else if (pontos >= 3) {
-
-        document.getElementById("titulo-resultado").textContent =
-            "Muito bem!";
-
-        resultado.textContent =
-            `${nomeJogador} fez boas escolhas. Ainda há alguns desafios, mas o futuro pode ser construído com decisões conscientes.`;
-
-    } else {
-
-        document.getElementById("titulo-resultado").textContent =
-            "Missão concluída!";
-
-        resultado.textContent =
-            `${nomeJogador} concluiu a missão. Que tal jogar novamente e tentar melhorar sua pontuação?`;
-    }
-}
+            const botoes =
+                document.querySelectorAll(".alternativa");
 
 
-// Inicia o jogo
-function iniciarJogo() {
+            // Impede clicar várias vezes
 
-    perguntaAtual = 0;
-    pontos = 0;
+            botoes.forEach(function (botao) {
 
-    nomeJogador = escolherNomeAleatorio();
+                botao.disabled = true;
 
-    mostrarTela(telaJogo);
-
-    carregarPergunta();
-}
+            });
 
 
-// Reinicia o jogo
-function jogarNovamente() {
+            // Verifica a resposta
 
-    iniciarJogo();
-}
+            if (
+                indiceEscolhido ===
+                perguntaAtualObjeto.correta
+            ) {
+
+                botaoEscolhido.classList.add(
+                    "correta"
+                );
+
+                pontos++;
+
+            } else {
+
+                botaoEscolhido.classList.add(
+                    "errada"
+                );
 
 
-// ==============================
-// EVENTOS DOS BOTÕES
-// ==============================
+                botoes[
+                    perguntaAtualObjeto.correta
+                ].classList.add("correta");
 
-botaoIniciar.addEventListener("click", iniciarJogo);
+            }
 
-botaoJogarNovamente.addEventListener(
-    "click",
-    jogarNovamente
-);
 
+            // Espera um segundo antes da próxima pergunta
+
+            setTimeout(function () {
+
+                perguntaAtual++;
+
+
+                if (
+                    perguntaAtual <
+                    perguntas.length
+                ) {
+
+                    carregarPergunta();
+
+                } else {
+
+                    finalizarJogo();
+
+                }
+
+            }, 1000);
+
+        }
+
+
+        // ==========================================
+        // FINALIZAR JOGO
+        // ==========================================
+
+        function finalizarJogo() {
+
+            mostrarTela(telaFinal);
+
+
+            pontuacao.textContent =
+                `${pontos}/${perguntas.length}`;
+
+
+            // Math.random() escolhe uma afirmação
+
+            afirmacao.textContent =
+                escolherAfirmacaoAleatoria();
+
+
+            // Mensagem dependendo da pontuação
+
+            if (
+                pontos === perguntas.length
+            ) {
+
+                tituloResultado.textContent =
+                    "Missão perfeita!";
+
+                resultado.textContent =
+                    `${nomeJogador} acertou todas as perguntas e mostrou que está preparado para ajudar a construir um futuro melhor.`;
+
+            }
+
+            else if (pontos >= 3) {
+
+                tituloResultado.textContent =
+                    "Muito bem!";
+
+                resultado.textContent =
+                    `${nomeJogador} fez boas escolhas. Ainda há alguns desafios, mas o futuro pode ser construído com decisões conscientes.`;
+
+            }
+
+            else {
+
+                tituloResultado.textContent =
+                    "Missão concluída!";
+
+                resultado.textContent =
+                    `${nomeJogador} concluiu a missão. Que tal jogar novamente e tentar melhorar sua pontuação?`;
+
+            }
+
+        }
+
+
+        // ==========================================
+        // BOTÕES
+        // ==========================================
+
+        botaoIniciar.addEventListener(
+            "click",
+            iniciarJogo
+        );
+
+
+        botaoJogarNovamente.addEventListener(
+            "click",
+            iniciarJogo
+        );
+
+    </script>
+
+</body>
+
+</html>
